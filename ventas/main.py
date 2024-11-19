@@ -5,6 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 from app.middlewares.errorHandle import ErrorHandle
+from app.routers.rolRouter import rol_router
+from app.routers.userRouter import user_router
 
 
 app = FastAPI()
@@ -28,6 +30,9 @@ app.add_middleware(
     allow_headers = ['*'],
 )
 
+
+app.include_router(rol_router)
+app.include_router(user_router)
 
 
 @app.get('/', tags=['home'])

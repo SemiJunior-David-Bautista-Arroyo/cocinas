@@ -1,4 +1,4 @@
-from conection.connection import base
+from app.conection.connection import base
 from sqlalchemy import Column, Integer, String
 
 
