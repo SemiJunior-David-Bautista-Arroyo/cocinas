@@ -16,7 +16,7 @@ class RolService:
 
     def getbyId(self, id : int) -> RolSchema:
 
-        rol = self.db.query(RolModel).filter(RolModel.id == id)
+        rol = self.db.query(RolModel).filter(RolModel.id == id).first()
 
         return rol
     

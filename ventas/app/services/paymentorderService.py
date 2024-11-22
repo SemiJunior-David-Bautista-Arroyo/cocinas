@@ -16,22 +16,14 @@ class PaymentOrderService:
     def generatePayment(self, data : PaymentOrderSchema, branch : int) -> PaymentOrderSchema:
 
         isbn = f'isbn000{random.randint(0,2610)}'
-
-        result = (
-            self.db.query(
-                PurchaseOrderModel.quantity.label('purchase_order_quantity'),
-                FurnitureModel.price.label('furniture_price'),
-                FurnitureModel.name.label('furniture_name'),
-            )
-            .join(PurchaseOrderModel, PaymentOrderModel.purchase_order_id == PurchaseOrderModel.id)
-            .join(FurnitureModel, FurnitureModel.id == PurchaseOrderModel.furniture_id)
-            .first()
-        )
+        
+        PurchaseOrder = self.db.query(PurchaseOrderModel).filter(PurchaseOrderModel.id == data.purchase_order_id).first()
+        Furniture = self.db.query(FurnitureModel).filter(FurnitureModel.id == PurchaseOrder.furniture_id).first()
 
         branch = self.db.query(BranchModel).filter(BranchModel.id == branch).first()
 
-        order_quantity = result.purchase_order_quantity
-        furniture_price = result.furniture_price
+        order_quantity = PurchaseOrder.quantity
+        furniture_price = Furniture.price
 
         total = order_quantity * furniture_price
 
@@ -49,7 +41,8 @@ class PaymentOrderService:
 
         obj = {
             'isbn' : npo.isbn,
-            'furniture' : result.furniture_name,
+            'furniture' : Furniture.name,
+            'quantity' : order_quantity,
             'total' : npo.total,
             'branch' : branch.branchname,
             'order_date' : datetime.now()
@@ -72,9 +65,9 @@ class PaymentOrderService:
             dailyTotal += venta.total
 
         dailyInfo ={
-            'dailysales' : totalventas,
+            'Totaldailysales' : totalventas,
             'dailytotal' : dailyTotal,
-
+            'sales' : [x for x in ventas]
         }
         
         return dailyInfo

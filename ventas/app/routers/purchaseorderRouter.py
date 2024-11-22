@@ -22,3 +22,16 @@ def add(data : PurchaseOrderSchema) -> PurchaseOrderSchema:
     except Exception as e:
 
         return JSONResponse(status_code=500, content={'error' : f'error: {e}'})
+
+
+@purchase_router.get('/purchases/get', tags=['Purchases'], status_code=200, response_model=list[PurchaseOrderSchema])
+def get() -> list[PurchaseOrderSchema]:
+    try:
+        purchases = service.getorders()
+
+        return JSONResponse(status_code=200, content=jsonable_encoder(purchases))
+    
+    except Exception as e:
+        raise Exception(f'error : {e}')
+
+

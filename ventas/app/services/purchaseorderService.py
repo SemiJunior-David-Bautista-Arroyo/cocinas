@@ -23,5 +23,11 @@ class PurchaseOrderService:
         return no
 
 
+    def getorders(self) -> list[PurchaseOrderSchema]:
+
+        purchaseorders = self.db.query(PurchaseOrderModel).all()
+
+        return purchaseorders
+
 
 

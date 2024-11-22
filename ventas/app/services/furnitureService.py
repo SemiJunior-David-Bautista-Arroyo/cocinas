@@ -10,7 +10,7 @@ class FurnitureService:
 
     def addFurniture(self, data : FurnitureSchema) -> FurnitureSchema:
 
-        furniture = FurnitureSchema(**data.__dict__)
+        furniture = FurnitureModel(**data.__dict__)
 
         self.db.add(furniture)
         self.db.commit()

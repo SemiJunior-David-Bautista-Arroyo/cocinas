@@ -1,0 +1,96 @@
+############################
+ROLES
+GET
+*Obtener todos los roles
+/rols
+
+*Obtener por id
+/rols/{id}
+id : int
+
+
+############################
+Users
+POST
+*Agregar nuevo usuario
+/users/add
+{
+  "name": "string",
+  "lastname": "string",
+  "username": "string",
+  "cellphone": "string",
+  "address": {},
+  "password_user": "string",
+  "rol_id": 0
+}
+Get
+*Obtener usuario por nombre y contraseña
+/users/{username}/{pasword}
+username : str
+pasword : str
+
+######################
+Furnitures
+POST
+*agregar nuevo mueble
+/furnitures/add
+{
+  "name": "string",
+  "description": "string",
+  "quantity": 0,
+  "price": 0
+}
+
+GET
+*Obtener todos los muebles
+/furnitures
+
+*obtener muebles por id
+/furnitures/{id}
+id : int
+
+PAtCH
+*Actualizar cantidad de muebles por id del mueble
+/furnitures/{id}/{q}
+id : int -> ID del mueble
+q : int -> cantidad de muebles vendidos o quitados
+
+###################################
+Purchases
+POST
+*Registrar nueva orden de compra
+/purchases
+{
+  "furniture_id": 0,
+  "quantity": 0,
+  "user_id": 0,
+  "delivery_date": "2024-11-22T18:34:21.952Z"
+}
+
+####################################
+Payments
+POST
+*Registrar una nueva orden de pago
+/payments/{branch}
+{
+  "purchase_order_id": 0
+}
+
+
+#################################
+BRANCHES
+Get
+*Obtener todas las sucursales
+/branches/get
+
+*Obtenr las sucursales por id
+/branches/get/{id}
+id : id
+
+POST
+*Registrar una nueva sucursal
+/branches/add
+{
+  "branchname": "string",
+  "address": {}
+}
