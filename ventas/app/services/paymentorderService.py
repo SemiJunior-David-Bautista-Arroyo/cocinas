@@ -58,6 +58,26 @@ class PaymentOrderService:
         self.db.close()
 
         return obj
+    
+
+
+    def dailyReport(self) :
+
+        ventas = self.db.query(PaymentOrderModel).all()
+
+        totalventas = len(ventas)
+        dailyTotal = 0
+
+        for venta in ventas:
+            dailyTotal += venta.total
+
+        dailyInfo ={
+            'dailysales' : totalventas,
+            'dailytotal' : dailyTotal,
+
+        }
+        
+        return dailyInfo
 
         
 
