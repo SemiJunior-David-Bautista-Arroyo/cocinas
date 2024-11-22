@@ -9,6 +9,8 @@ from app.routers.rolRouter import rol_router
 from app.routers.userRouter import user_router
 from app.routers.furnitureRouter import furniture_router
 from app.routers.purchaseorderRouter import purchase_router
+from app.routers.paymentorderRouter import payment_router
+from app.routers.branchRouter import branch_router
 
 
 app = FastAPI()
@@ -37,6 +39,8 @@ app.include_router(rol_router)
 app.include_router(user_router)
 app.include_router(furniture_router)
 app.include_router(purchase_router)
+app.include_router(payment_router)
+app.include_router(branch_router)
 
 
 @app.get('/', tags=['home'])
