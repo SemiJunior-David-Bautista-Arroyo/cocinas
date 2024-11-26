@@ -1,5 +1,5 @@
 from app.models.userModel import UserModel
-from app.schemas.user import UserSchema
+from app.schemas.user import UserSchema, AddressSchema
 
 from passlib.context import CryptContext
 
@@ -72,26 +72,21 @@ class userService:
         return
 
 
-    def updateClient(self, id : int, data : UserSchema) -> UserSchema :
+    def updateClient(self, id : int, data : AddressSchema) -> UserSchema :
         
         client = self.getclientbyId(id)
 
         if client is None:
             return False
-        
-        client.id = data.id
-        client.name = data.name
-        client.lastname = data.lastname
-        client.cellphone = data.cellphone
-        client.password_user = data.password_user
-        client.address = data.address
-        client.email = data.email
+
+        client.address = data.__dict__
+
 
         self.db.commit()
-        self.db.close()
         self.db.refresh(client)
 
         cliente = self.excludeValues(client)
+        self.db.close()
 
         return cliente
 

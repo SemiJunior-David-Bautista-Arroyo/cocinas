@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 
-from app.schemas.user import UserSchema
+from app.schemas.user import UserSchema, AddressSchema
 from app.services.userService import userService
 from app.conection.conection import sessionBD
 
@@ -42,4 +42,16 @@ def verify(email : str, password : str):
         return JSONResponse(status_code=200, content=jsonable_encoder(user))
 
     except Exception as e:
+        return JSONResponse(status_code=500, content={'error' : f'Error: {e}'})
+
+
+@user_router.patch('/user/update/{id}', tags=['User'], status_code=200, response_model=UserSchema)
+def updateAddress(id : int, address : AddressSchema) ->UserSchema:
+    try:
+        user = service.updateClient(id, address)
+
+        return JSONResponse(status_code=201, content=jsonable_encoder(user))
+
+    except Exception as e:
+
         return JSONResponse(status_code=500, content={'error' : f'Error: {e}'})

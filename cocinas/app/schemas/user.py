@@ -9,6 +9,14 @@ class UserSchema(BaseModel):
     email : str
     cellphone : str
     password_user : str
-    address  : dict
+    address  : Optional[dict] = None
+
+
+class AddressSchema(BaseModel):
+
+    calle : str
+    numero : str
+    colonia : str
+
 
 
