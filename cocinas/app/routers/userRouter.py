@@ -36,9 +36,9 @@ def addUser(data : UserSchema):
 
 
 @user_router.get('/user/verify', tags=['User'], status_code=200)
-def verify(username : str, password : str):
+def verify(email : str, password : str):
     try:
-        user = service.verifyClient(username, password)
+        user = service.verifyClient(email, password)
         return JSONResponse(status_code=200, content=jsonable_encoder(user))
 
     except Exception as e:

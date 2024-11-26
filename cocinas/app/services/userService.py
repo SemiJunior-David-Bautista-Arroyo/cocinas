@@ -21,8 +21,8 @@ class userService:
         return user_dict
 
 
-    def verifyClient(self, username : str, password : str) -> UserSchema :
-        client = self.db.query(UserModel).filter(UserModel.name == username).first()
+    def verifyClient(self, email : str, password : str) -> UserSchema :
+        client = self.db.query(UserModel).filter(UserModel.email == email).first()
 
         password_verifier = pwd_context.verify(password, client.password_user)
 
