@@ -20,8 +20,9 @@ app.add_middleware(ErrorHandle)
 
 origins = [
     "http://localhost",
+    "http://127.0.0.1:3000",
     "http://localhost:5000",
-    "http://localhost:8000",
+    "http://localhost:3000",
 ]
 
 app.add_middleware(
