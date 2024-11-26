@@ -9,6 +9,7 @@ from app.routers.kitchenRouter import kitchen_router
 from app.routers.materialRouter import material_router
 from app.routers.installerRouter import installer_router
 from app.routers.orderRouter import order_router
+from app.routers.mailRouter import mail_router
 
 
 app = FastAPI()
@@ -40,6 +41,8 @@ app.include_router(kitchen_router)
 app.include_router(material_router)
 app.include_router(installer_router)
 app.include_router(order_router)
+app.include_router(mail_router)
+
 
 
 @app.get('/', tags=['home'])
