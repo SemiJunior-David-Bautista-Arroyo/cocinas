@@ -23,6 +23,17 @@ def adduser(data : UserSchema) -> UserSchema:
         return JSONResponse(status_code=500, content={'error' : f'Error: {e}'})
 
 
+@user_router.get('/users/get_all', tags=['Users'], status_code=201, response_model=UserSchema)
+def adduser() -> UserSchema:
+    try:
+        usr = service.getall()
+
+        return JSONResponse(status_code=201, content=jsonable_encoder(usr))
+
+    except Exception as e:
+        return JSONResponse(status_code=500, content={'error' : f'Error: {e}'})
+
+
 @user_router.get('/users/{username}/{pasword}', tags=['Users'], status_code=200)
 def verifyUser(username : str, pasword : str):
     try:

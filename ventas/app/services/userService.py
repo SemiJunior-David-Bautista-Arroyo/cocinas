@@ -69,3 +69,10 @@ class UserService:
         return None
     
     
+    def getall(self) :
+
+        users = self.db.query(UserModel).all()
+
+        return users
+    
+    
