@@ -16,11 +16,10 @@ with open(credentials_path, 'r') as file:
 db_password = config.get('password') 
 db_username = config.get('username') 
 db_host = config.get('host') 
-db_port = config.get('port') 
 db_database = config.get('database') 
 
 
-database_url = f"postgresql://{db_username}:{db_password}@{db_host}:{db_port}/{db_database}"
+database_url = f"mysql+pymysql://{db_username}:{db_password}@{db_host}/{db_database}"
 
 
 engine = create_engine(database_url, echo=True)
