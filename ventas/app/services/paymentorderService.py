@@ -6,6 +6,7 @@ from app.models.purchaseorderModel import PurchaseOrderModel
 from app.models.furnitureModel import FurnitureModel
 from app.models.branchModel import BranchModel
 from app.schemas.paymentorderSchema import  PaymentOrderSchema
+from app.services.furnitureService import FurnitureService
 
 class PaymentOrderService:
 
@@ -34,6 +35,8 @@ class PaymentOrderService:
         datadict['total'] = total
 
         npo = PaymentOrderModel(**datadict)
+
+        FurnitureService(self.db).updateQuantity(PurchaseOrder.id, order_quantity)
 
         self.db.add(npo)
         self.db.commit()
