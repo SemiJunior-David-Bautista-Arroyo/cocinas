@@ -23,8 +23,8 @@ def adduser(data : UserSchema) -> UserSchema:
         return JSONResponse(status_code=500, content={'error' : f'Error: {e}'})
 
 
-@user_router.get('/users/get_all', tags=['Users'], status_code=201, response_model=UserSchema)
-def adduser() -> UserSchema:
+@user_router.get('/users/get_all', tags=['Users'], status_code=201, response_model=list[UserSchema])
+def getAll() -> list[UserSchema]:
     try:
         usr = service.getall()
 

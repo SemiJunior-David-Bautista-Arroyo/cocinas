@@ -39,7 +39,7 @@ class FurnitureService:
 
         furniture.quantity -= q
 
-        self.db.commit()
         self.db.refresh(furniture)
+        self.db.commit()
 
         return furniture

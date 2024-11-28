@@ -16,11 +16,12 @@ class PaymentOrderService:
 
     def generatePayment(self, data : PaymentOrderSchema, branch : int) -> PaymentOrderSchema:
 
-        isbn = f'isbn000{random.randint(0,2610)}'
+        isbn = f'isbn000{random.randint(2610, 999999)}'
         
-        PurchaseOrder = self.db.query(PurchaseOrderModel).filter(PurchaseOrderModel.id == data.purchase_order_id).first()
-        Furniture = self.db.query(FurnitureModel).filter(FurnitureModel.id == PurchaseOrder.furniture_id).first()
-
+        PurchaseOrder : PurchaseOrderModel = self.db.query(PurchaseOrderModel).filter(PurchaseOrderModel.id == data.purchase_order_id).first()
+        print(PurchaseOrder.__dict__)
+        Furniture : FurnitureModel = self.db.query(FurnitureModel).filter(FurnitureModel.id == PurchaseOrder.furniture_id).first()
+        print(Furniture.__dict__)
         branch = self.db.query(BranchModel).filter(BranchModel.id == branch).first()
 
         order_quantity = PurchaseOrder.quantity
@@ -28,7 +29,7 @@ class PaymentOrderService:
 
         total = order_quantity * furniture_price
 
-        datadict = data.__dict__
+        datadict = data.__dict__.copy()
 
         datadict['isbn'] = isbn
 
@@ -36,11 +37,17 @@ class PaymentOrderService:
 
         npo = PaymentOrderModel(**datadict)
 
-        FurnitureService(self.db).updateQuantity(PurchaseOrder.id, order_quantity)
+        FurnitureService(self.db).updateQuantity(PurchaseOrder.furniture_id, order_quantity)
 
-        self.db.add(npo)
-        self.db.commit()
-        self.db.refresh(npo)
+        try:
+            self.db.add(npo)
+            self.db.commit()
+            self.db.refresh(npo)
+
+
+        except Exception as e:
+            self.db.rollback()
+            raise e
 
         obj = {
             'isbn' : npo.isbn,
@@ -51,7 +58,6 @@ class PaymentOrderService:
             'order_date' : datetime.now()
         } 
 
-        self.db.close()
 
         return obj
     
